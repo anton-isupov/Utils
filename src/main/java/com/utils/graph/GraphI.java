@@ -11,7 +11,7 @@ public interface GraphI<V extends VertexI, E extends EdgeI<V>> {
 
     boolean isVertexInGraph(V v);
 
-    Map<V, Set<E>> getIncidentEdges();
+    Map<V, Set<E>> getVertexesIncidentEdges();
 
     Set<E> getEdges();
 }

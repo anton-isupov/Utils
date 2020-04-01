@@ -15,17 +15,17 @@ import java.util.stream.Collectors;
 @ToString
 public class SimpleGraph<V extends VertexI, E extends EdgeI<V>> implements GraphI<V, E>{
     private Set<E> edges;
-    private Map<V, Set<E>> incidentEdges; // vertex -> list of incident edges
+    private Map<V, Set<E>> vertexesIncidentEdges; // vertex -> list of incident edges
 
     public SimpleGraph(Set<E> edges, Map<V, Set<E>> incidentEdges) {
         this.edges = edges == null ? new HashSet<>() : edges;
-        this.incidentEdges = incidentEdges == null ? new HashMap<>() : incidentEdges;
+        this.vertexesIncidentEdges = incidentEdges == null ? new HashMap<>() : incidentEdges;
     }
 
-    public SimpleGraph(Map<V, Set<E>> incidentEdges) {
-        this.incidentEdges = incidentEdges;
+    public SimpleGraph(Map<V, Set<E>> vertexesIncidentEdges) {
+        this.vertexesIncidentEdges = vertexesIncidentEdges;
         this.edges = new HashSet<>();
-        this.edges.addAll(incidentEdges.values()
+        this.edges.addAll(vertexesIncidentEdges.values()
                 .stream()
                 .flatMap(Set::stream)
                 .collect(Collectors.toList()));
@@ -36,16 +36,16 @@ public class SimpleGraph<V extends VertexI, E extends EdgeI<V>> implements Graph
         return new SimpleGraph<V, E>(setGraphByEdges(edges));
     }
 
+    public boolean isVertexInGraph(V v) {
+        return vertexesIncidentEdges.containsKey(v);
+    }
+
     public int getVertexesCount() {
-        return incidentEdges.size();
+        return vertexesIncidentEdges.size();
     }
 
     public int getEdgesCount() {
         return edges.size();
-    }
-
-    public boolean isVertexInGraph(V v) {
-        return incidentEdges.containsKey(v);
     }
 
 
@@ -55,12 +55,12 @@ public class SimpleGraph<V extends VertexI, E extends EdgeI<V>> implements Graph
         if (o == null || getClass() != o.getClass()) return false;
         SimpleGraph<V, E> simpleGraph = (SimpleGraph<V, E>) o;
         return Objects.equals(edges, simpleGraph.edges) &&
-                Objects.equals(incidentEdges, simpleGraph.incidentEdges);
+                Objects.equals(vertexesIncidentEdges, simpleGraph.vertexesIncidentEdges);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(edges, incidentEdges);
+        return Objects.hash(edges, vertexesIncidentEdges);
     }
 
     private static <V extends VertexI, E extends EdgeI<V>> Map<V, Set<E>> setGraphByEdges(List<E> edges) {

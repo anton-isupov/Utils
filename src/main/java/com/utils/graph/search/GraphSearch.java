@@ -19,7 +19,7 @@ public class GraphSearch {
 
         while (!queue.isEmpty()) {
             V v = queue.poll();
-            for (E edge : graph.getIncidentEdges().get(v)) {
+            for (E edge : graph.getVertexesIncidentEdges().get(v)) {
                 V w = edge.adjacentVertex(v);
                 if (!exploredVertexes.contains(w)) {
                     exploredVertexes.add(w);
