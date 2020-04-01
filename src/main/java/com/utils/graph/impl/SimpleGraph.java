@@ -16,16 +16,16 @@ import java.util.stream.Collectors;
 public class SimpleGraph<V extends VertexI, E extends EdgeI<V>> implements GraphI<V, E> {
     private Set<E> edges;
     private Map<V, Set<E>> vertexesIncidentEdges; // vertex -> list of incident edges
-    private Set<V> exploredVertexes;
+    private Map<V, Integer> exploredVertexes; // Integer -> weight to go this vertex when all edges weight is one.
 
     public SimpleGraph(Set<E> edges, Map<V, Set<E>> incidentEdges) {
-        this.exploredVertexes = new HashSet<>();
+        this.exploredVertexes = new HashMap<>();
         this.edges = edges == null ? new HashSet<>() : edges;
         this.vertexesIncidentEdges = incidentEdges == null ? new HashMap<>() : incidentEdges;
     }
 
     public SimpleGraph(Map<V, Set<E>> vertexesIncidentEdges) {
-        this.exploredVertexes = new HashSet<>();
+        this.exploredVertexes = new HashMap<>();
         this.vertexesIncidentEdges = vertexesIncidentEdges;
         this.edges = new HashSet<>();
         this.edges.addAll(vertexesIncidentEdges.values()
@@ -44,8 +44,13 @@ public class SimpleGraph<V extends VertexI, E extends EdgeI<V>> implements Graph
     }
 
     @Override
-    public void setExploredVertex(V v) {
-        exploredVertexes.add(v);
+    public Set<V> getAllVertexes() {
+        return vertexesIncidentEdges.keySet();
+    }
+
+    @Override
+    public void setExploredVertex(V v, int len) {
+        exploredVertexes.put(v, len);
     }
 
     @Override
@@ -54,8 +59,8 @@ public class SimpleGraph<V extends VertexI, E extends EdgeI<V>> implements Graph
     }
 
     @Override
-    public boolean isExploredVertex(V v) {
-        return exploredVertexes.contains(v);
+    public int isExploredVertex(V v) {
+        return exploredVertexes.getOrDefault(v, -1);
     }
 
     @Override
@@ -64,7 +69,7 @@ public class SimpleGraph<V extends VertexI, E extends EdgeI<V>> implements Graph
     }
 
     @Override
-    public Set<V> getAllExploredVertexes() {
+    public Map<V, Integer> getAllExploredVertexes() {
         return exploredVertexes;
     }
 

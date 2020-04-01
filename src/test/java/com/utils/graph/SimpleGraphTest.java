@@ -30,10 +30,10 @@ public class SimpleGraphTest {
     );
 
     List<EdgeI<VertexI>> simpleEdges = Arrays.asList(
-            new SimpleEdge<>("1-2", vertexList.get(0), vertexList.get(1)),
-            new SimpleEdge<>("2-3", vertexList.get(1), vertexList.get(2)),
-            new SimpleEdge<>("2-4", vertexList.get(1), vertexList.get(3)),
-            new SimpleEdge<>("5-6", vertexList.get(4), vertexList.get(5)));
+            new SimpleEdge<>("1-2", vertexList.get(0), vertexList.get(1), 1),
+            new SimpleEdge<>("2-3", vertexList.get(1), vertexList.get(2), 2),
+            new SimpleEdge<>("2-4", vertexList.get(1), vertexList.get(3), 10),
+            new SimpleEdge<>("5-6", vertexList.get(4), vertexList.get(5), 11));
 
     @Test
     public void testBFS () throws VertexNotInGraphException {
@@ -41,7 +41,9 @@ public class SimpleGraphTest {
 
         Set<VertexI> answer = new HashSet<>(Arrays.asList(vertexList.get(0), vertexList.get(1), vertexList.get(2), vertexList.get(3)));
         GraphI<VertexI, EdgeI<VertexI>> searchedGraph = GraphSearch.bfs(testGraph, vertexList.get(0));
-        assertEquals(answer, searchedGraph.getAllExploredVertexes());
+        System.out.println(searchedGraph.getAllExploredVertexes());
+
+        assertEquals(answer, searchedGraph.getAllExploredVertexes().keySet());
     }
 
 

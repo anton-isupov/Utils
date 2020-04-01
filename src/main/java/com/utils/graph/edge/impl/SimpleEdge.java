@@ -16,9 +16,20 @@ public class SimpleEdge<V> implements EdgeI<V> {
     private String name;
     private V leftVertex;
     private V rightVertex;
+    private int weight;
 
     public V adjacentVertex(V v) {
         return v.equals(leftVertex) ? rightVertex : leftVertex;
+    }
+
+    @Override
+    public int getEdgeWeight() {
+        return weight;
+    }
+
+    @Override
+    public void setEdgeWeight(int weight) {
+        this.weight = weight;
     }
 
     @Override
