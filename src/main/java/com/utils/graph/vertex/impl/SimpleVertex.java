@@ -27,4 +27,5 @@ public class SimpleVertex implements VertexI {
    public int hashCode() {
       return Objects.hash(name);
    }
+
 }

@@ -13,16 +13,19 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 @ToString
-public class SimpleGraph<V extends VertexI, E extends EdgeI<V>> implements GraphI<V, E>{
+public class SimpleGraph<V extends VertexI, E extends EdgeI<V>> implements GraphI<V, E> {
     private Set<E> edges;
     private Map<V, Set<E>> vertexesIncidentEdges; // vertex -> list of incident edges
+    private Set<V> exploredVertexes;
 
     public SimpleGraph(Set<E> edges, Map<V, Set<E>> incidentEdges) {
+        this.exploredVertexes = new HashSet<>();
         this.edges = edges == null ? new HashSet<>() : edges;
         this.vertexesIncidentEdges = incidentEdges == null ? new HashMap<>() : incidentEdges;
     }
 
     public SimpleGraph(Map<V, Set<E>> vertexesIncidentEdges) {
+        this.exploredVertexes = new HashSet<>();
         this.vertexesIncidentEdges = vertexesIncidentEdges;
         this.edges = new HashSet<>();
         this.edges.addAll(vertexesIncidentEdges.values()
@@ -40,6 +43,31 @@ public class SimpleGraph<V extends VertexI, E extends EdgeI<V>> implements Graph
         return vertexesIncidentEdges.containsKey(v);
     }
 
+    @Override
+    public void setExploredVertex(V v) {
+        exploredVertexes.add(v);
+    }
+
+    @Override
+    public void setUnExploredVertex(V v) {
+        exploredVertexes.remove(v);
+    }
+
+    @Override
+    public boolean isExploredVertex(V v) {
+        return exploredVertexes.contains(v);
+    }
+
+    @Override
+    public void unExploreAllVertexes() {
+        exploredVertexes.clear();
+    }
+
+    @Override
+    public Set<V> getAllExploredVertexes() {
+        return exploredVertexes;
+    }
+
     public int getVertexesCount() {
         return vertexesIncidentEdges.size();
     }
@@ -53,9 +81,9 @@ public class SimpleGraph<V extends VertexI, E extends EdgeI<V>> implements Graph
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        SimpleGraph<V, E> simpleGraph = (SimpleGraph<V, E>) o;
-        return Objects.equals(edges, simpleGraph.edges) &&
-                Objects.equals(vertexesIncidentEdges, simpleGraph.vertexesIncidentEdges);
+        SimpleGraph<?, ?> that = (SimpleGraph<?, ?>) o;
+        return Objects.equals(edges, that.edges) &&
+                Objects.equals(vertexesIncidentEdges, that.vertexesIncidentEdges);
     }
 
     @Override

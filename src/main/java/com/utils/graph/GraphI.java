@@ -14,4 +14,14 @@ public interface GraphI<V extends VertexI, E extends EdgeI<V>> {
     Map<V, Set<E>> getVertexesIncidentEdges();
 
     Set<E> getEdges();
+
+    void setExploredVertex(V v);
+
+    void setUnExploredVertex(V v);
+
+    boolean isExploredVertex(V v);
+
+    void unExploreAllVertexes();
+
+    Set<V> getAllExploredVertexes();
 }
