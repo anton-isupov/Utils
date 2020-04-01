@@ -28,16 +28,8 @@ public class GraphTest {
                 new Edge("2-4", vertexes.get(1), vertexes.get(3)),
                 new Edge("5-6", vertexes.get(4), vertexes.get(5)));
 
-        Map<Vertex, List<Edge>> mapIncidentEdges = new HashMap<Vertex, List<Edge>>() {{
-            put(vertexes.get(0), Collections.singletonList(edges.get(0)));
-            put(vertexes.get(1), Arrays.asList(edges.get(0), edges.get(1), edges.get(2)));
-            put(vertexes.get(2), Collections.singletonList(edges.get(1)));
-            put(vertexes.get(3), Collections.singletonList(edges.get(2)));
-            put(vertexes.get(4), Collections.singletonList(edges.get(3)));
-            put(vertexes.get(5), Collections.singletonList(edges.get(3)));
-        }};
 
-        Graph testGraph = new Graph(edges, mapIncidentEdges);
+        Graph testGraph = Graph.create(edges);
         Set<Vertex> answer = new HashSet<>(Arrays.asList(vertexes.get(0), vertexes.get(1), vertexes.get(2), vertexes.get(3)));
         assertEquals(answer, GraphSearch.bfs(testGraph, vertexes.get(0)));
     }
@@ -52,4 +44,5 @@ public class GraphTest {
         System.out.println(map.get(v2));
         assertEquals("String", map.get(v2));
     }
+
 }
