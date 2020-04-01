@@ -1,8 +1,8 @@
-package com.utils.graph;
+package com.utils.graph.impl;
 
+import com.utils.graph.GraphI;
 import com.utils.graph.edge.Edge;
 import com.utils.graph.vertex.Vertex;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 @ToString
-public class Graph {
+public class Graph implements GraphI {
     private Set<Edge> edges;
     private Map<Vertex, Set<Edge>> incidentEdges; // vertex -> list of incident edges
 
@@ -43,6 +43,7 @@ public class Graph {
         return edges.size();
     }
 
+    @Override
     public boolean isVertexInGraph(Vertex v) {
         return incidentEdges.containsKey(v);
     }
