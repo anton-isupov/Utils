@@ -1,16 +1,17 @@
 package com.utils.graph;
 
-import com.utils.graph.edge.Edge;
-import com.utils.graph.vertex.Vertex;
+
+import com.utils.graph.edge.EdgeI;
+import com.utils.graph.vertex.VertexI;
 
 import java.util.Map;
 import java.util.Set;
 
-public interface GraphI {
+public interface GraphI<V extends VertexI, E extends EdgeI<V>> {
 
-    boolean isVertexInGraph(Vertex v);
+    boolean isVertexInGraph(V v);
 
-    Map<Vertex, Set<Edge>> getIncidentEdges();
+    Map<V, Set<E>> getIncidentEdges();
 
-    Set<Edge> getEdges();
+    Set<E> getEdges();
 }

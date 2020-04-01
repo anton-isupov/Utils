@@ -1,6 +1,6 @@
-package com.utils.graph.edge;
+package com.utils.graph.edge.impl;
 
-import com.utils.graph.vertex.Vertex;
+import com.utils.graph.edge.EdgeI;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,12 +12,12 @@ import java.util.Objects;
 @Setter
 @AllArgsConstructor
 @ToString
-public class Edge {
+public class SimpleEdge<V> implements EdgeI<V> {
     private String name;
-    private Vertex leftVertex;
-    private Vertex rightVertex;
+    private V leftVertex;
+    private V rightVertex;
 
-    public Vertex adjacentVertex(Vertex v) {
+    public V adjacentVertex(V v) {
         return v.equals(leftVertex) ? rightVertex : leftVertex;
     }
 
@@ -25,10 +25,10 @@ public class Edge {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Edge edge = (Edge) o;
-        return Objects.equals(name, edge.name) &&
-                Objects.equals(leftVertex, edge.leftVertex) &&
-                Objects.equals(rightVertex, edge.rightVertex);
+        SimpleEdge<V> simpleEdge = (SimpleEdge<V>) o;
+        return Objects.equals(name, simpleEdge.name) &&
+                Objects.equals(leftVertex, simpleEdge.leftVertex) &&
+                Objects.equals(rightVertex, simpleEdge.rightVertex);
     }
 
     @Override

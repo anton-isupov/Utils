@@ -1,26 +1,26 @@
 package com.utils.graph.search;
 
 import com.utils.graph.GraphI;
-import com.utils.graph.impl.Graph;
-import com.utils.graph.edge.Edge;
+import com.utils.graph.edge.EdgeI;
 import com.utils.graph.exceptions.VertexNotInGraphException;
-import com.utils.graph.vertex.Vertex;
+import com.utils.graph.vertex.VertexI;
 
 import java.util.*;
 
 public class GraphSearch {
 
-    public static Set<Vertex> bfs(GraphI graph, Vertex s) throws VertexNotInGraphException {
-        if (!graph.isVertexInGraph(s)) throw new VertexNotInGraphException("Vertex " + s + " not in graph " + graph);
-        Set<Vertex> exploredVertexes = new HashSet<Vertex>() {{ add(s); }};
+    public static <V extends VertexI, E extends EdgeI<V>> Set<V> bfs(GraphI<V, E> graph, V s) throws VertexNotInGraphException {
 
-        Queue<Vertex> queue = new LinkedList<>();
+        if (!graph.isVertexInGraph(s)) throw new VertexNotInGraphException("Vertex " + s + " not in graph " + graph);
+        Set<V> exploredVertexes = new HashSet<V>() {{ add(s); }};
+
+        Queue<V> queue = new LinkedList<>();
         queue.add(s);
 
         while (!queue.isEmpty()) {
-            Vertex v = queue.poll();
-            for (Edge edge : graph.getIncidentEdges().get(v)) {
-                Vertex w = edge.adjacentVertex(v);
+            V v = queue.poll();
+            for (E edge : graph.getIncidentEdges().get(v)) {
+                V w = edge.adjacentVertex(v);
                 if (!exploredVertexes.contains(w)) {
                     exploredVertexes.add(w);
                     queue.add(w);
