@@ -7,21 +7,13 @@ import com.utils.graph.impl.SimpleGraph;
 import com.utils.graph.search.GraphSearch;
 import com.utils.graph.vertex.VertexI;
 import com.utils.graph.vertex.impl.CoordinateVertex;
-import com.utils.graph.vertex.impl.SimpleVertex;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SimpleGraphTest {
-
-/*
-    List<SimpleVertex> simpleVertices = Arrays.asList(
-            new SimpleVertex("1"), new SimpleVertex("2"),
-            new SimpleVertex("3"), new SimpleVertex("4"),
-            new SimpleVertex("5"), new SimpleVertex("6"));
-*/
 
     List<VertexI> vertexList = Arrays.asList(
             new CoordinateVertex(1,0), new CoordinateVertex(2,0),
@@ -39,11 +31,18 @@ public class SimpleGraphTest {
     public void testBFS () throws VertexNotInGraphException {
         GraphI<VertexI, EdgeI<VertexI>> testGraph = SimpleGraph.create(simpleEdges);
 
-        Set<VertexI> answer = new HashSet<>(Arrays.asList(vertexList.get(0), vertexList.get(1), vertexList.get(2), vertexList.get(3)));
-        GraphI<VertexI, EdgeI<VertexI>> searchedGraph = GraphSearch.bfs(testGraph, vertexList.get(0));
-        System.out.println(searchedGraph.getAllExploredVertexes());
+        Map<VertexI, Integer> answer = new HashMap<VertexI, Integer>() {{
+            put(vertexList.get(0), 0);
+            put(vertexList.get(1), 1);
+            put(vertexList.get(2), 3);
+            put(vertexList.get(3), 11);
+        }};
 
-        assertEquals(answer, searchedGraph.getAllExploredVertexes().keySet());
+        GraphSearch<VertexI, EdgeI<VertexI>> graphSearch = new GraphSearch<>();
+        Map<VertexI, Integer> bfs = graphSearch.bfs(testGraph, vertexList.get(0));
+        System.out.println(bfs);
+
+        assertEquals(answer, bfs);
     }
 
 
@@ -51,8 +50,18 @@ public class SimpleGraphTest {
     public void testDFS() throws VertexNotInGraphException {
         GraphI<VertexI, EdgeI<VertexI>> testGraph = SimpleGraph.create(simpleEdges);
 
-        Set<VertexI> answer = new HashSet<>(Arrays.asList(vertexList.get(0), vertexList.get(1), vertexList.get(2), vertexList.get(3)));
-        assertEquals(answer, GraphSearch.dfs(testGraph, vertexList.get(0)).getAllExploredVertexes());
+        Set<VertexI> answer = new HashSet<VertexI>() {{
+            add(vertexList.get(0));
+            add(vertexList.get(1));
+            add(vertexList.get(2));
+            add(vertexList.get(3));
+        }};
+
+        GraphSearch<VertexI, EdgeI<VertexI>> graphSearch = new GraphSearch<>();
+        Set<VertexI> dfs = graphSearch.dfs(testGraph, vertexList.get(0));
+        System.out.println(dfs);
+
+        assertEquals(answer, dfs);
     }
 
 }

@@ -16,16 +16,8 @@ import java.util.stream.Collectors;
 public class SimpleGraph<V extends VertexI, E extends EdgeI<V>> implements GraphI<V, E> {
     private Set<E> edges;
     private Map<V, Set<E>> vertexesIncidentEdges; // vertex -> list of incident edges
-    private Map<V, Integer> exploredVertexes; // Integer -> weight to go this vertex when all edges weight is one.
-
-    public SimpleGraph(Set<E> edges, Map<V, Set<E>> incidentEdges) {
-        this.exploredVertexes = new HashMap<>();
-        this.edges = edges == null ? new HashSet<>() : edges;
-        this.vertexesIncidentEdges = incidentEdges == null ? new HashMap<>() : incidentEdges;
-    }
 
     public SimpleGraph(Map<V, Set<E>> vertexesIncidentEdges) {
-        this.exploredVertexes = new HashMap<>();
         this.vertexesIncidentEdges = vertexesIncidentEdges;
         this.edges = new HashSet<>();
         this.edges.addAll(vertexesIncidentEdges.values()
@@ -34,9 +26,8 @@ public class SimpleGraph<V extends VertexI, E extends EdgeI<V>> implements Graph
                 .collect(Collectors.toList()));
     }
 
-
     public static <V extends VertexI, E extends EdgeI<V>> SimpleGraph<V, E> create(List<E> edges) {
-        return new SimpleGraph<V, E>(setGraphByEdges(edges));
+        return new SimpleGraph<>(setGraphByEdges(edges));
     }
 
     public boolean isVertexInGraph(V v) {
@@ -48,31 +39,6 @@ public class SimpleGraph<V extends VertexI, E extends EdgeI<V>> implements Graph
         return vertexesIncidentEdges.keySet();
     }
 
-    @Override
-    public void setExploredVertex(V v, int len) {
-        exploredVertexes.put(v, len);
-    }
-
-    @Override
-    public void setUnExploredVertex(V v) {
-        exploredVertexes.remove(v);
-    }
-
-    @Override
-    public int isExploredVertex(V v) {
-        return exploredVertexes.getOrDefault(v, -1);
-    }
-
-    @Override
-    public void unExploreAllVertexes() {
-        exploredVertexes.clear();
-    }
-
-    @Override
-    public Map<V, Integer> getAllExploredVertexes() {
-        return exploredVertexes;
-    }
-
     public int getVertexesCount() {
         return vertexesIncidentEdges.size();
     }
@@ -80,7 +46,6 @@ public class SimpleGraph<V extends VertexI, E extends EdgeI<V>> implements Graph
     public int getEdgesCount() {
         return edges.size();
     }
-
 
     @Override
     public boolean equals(Object o) {
