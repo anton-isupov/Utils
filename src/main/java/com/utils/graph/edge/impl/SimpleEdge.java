@@ -1,6 +1,8 @@
 package com.utils.graph.edge.impl;
 
+import com.utils.graph.edge.AbstractEdge;
 import com.utils.graph.edge.EdgeI;
+import com.utils.graph.vertex.VertexI;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +14,7 @@ import java.util.Objects;
 @Setter
 @AllArgsConstructor
 @ToString
-public class SimpleEdge<V> implements EdgeI<V> {
+public class SimpleEdge<V extends VertexI> extends AbstractEdge<V> {
     private String name;
     private V leftVertex;
     private V rightVertex;

@@ -1,5 +1,6 @@
-package com.utils.graph;
+package com.utils.graph.search;
 
+import com.utils.graph.GraphI;
 import com.utils.graph.edge.EdgeI;
 import com.utils.graph.edge.impl.SimpleEdge;
 import com.utils.graph.exceptions.VertexNotInGraphException;
@@ -13,7 +14,7 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class SimpleGraphTest {
+public class SearchTest {
 
     List<VertexI> vertexList = Arrays.asList(
             new CoordinateVertex(1,0), new CoordinateVertex(2,0),

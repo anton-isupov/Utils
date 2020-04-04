@@ -1,5 +1,6 @@
 package com.utils.graph.vertex.impl;
 
+import com.utils.graph.vertex.AbstractVertex;
 import com.utils.graph.vertex.VertexI;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,7 +13,7 @@ import java.util.Objects;
 @Setter
 @AllArgsConstructor
 @ToString
-public class SimpleVertex implements VertexI {
+public class SimpleVertex extends AbstractVertex {
    private String name;
 
    @Override
